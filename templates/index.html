@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Traffic Management System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ── Header ─────────────────────────────────────────────── -->
+<header class="topbar">
+  <div class="topbar__brand">
+    <span class="topbar__icon">🚦</span>
+    <span class="topbar__title">Smart Traffic Management System</span>
+  </div>
+  <div class="topbar__controls">
+    <span class="status-dot" id="conn-dot" title="Connection status"></span>
+    <span class="status-label" id="conn-label">Connecting...</span>
+    <button class="btn btn--green" id="btn-start" onclick="startSystem()">▶ Start</button>
+    <button class="btn btn--red"   id="btn-stop"  onclick="stopSystem()">■ Stop</button>
+  </div>
+</header>
+
+<!-- ── Emergency Banner ────────────────────────────────────── -->
+<div class="emergency-banner hidden" id="emergency-banner">
+  🚨 EMERGENCY VEHICLE DETECTED — <span id="emergency-lane-text"></span>
+</div>
+
+<!-- ── Main Layout ─────────────────────────────────────────── -->
+<main class="dashboard">
+
+  <!-- Lane Signal Cards -->
+  <section class="lanes-grid" id="lanes-grid"></section>
+
+  <!-- Stats Panel -->
+  <section class="stats-panel">
+    <div class="summary-row">
+      <div class="summary-card">
+        <div class="summary-card__val" id="total-vehicles">0</div>
+        <div class="summary-card__lbl">Total Vehicles</div>
+      </div>
+      <div class="summary-card summary-card--teal">
+        <div class="summary-card__val" id="active-phase">—</div>
+        <div class="summary-card__lbl">Active Green Lane</div>
+      </div>
+      <div class="summary-card summary-card--amber">
+        <div class="summary-card__val" id="avg-density">0%</div>
+        <div class="summary-card__lbl">Avg Density</div>
+      </div>
+      <div class="summary-card summary-card--red">
+        <div class="summary-card__val" id="emergency-count">0</div>
+        <div class="summary-card__lbl">Emergency Vehicles</div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <h3 class="chart-card__title">Vehicle Density per Lane (%)</h3>
+      <canvas id="density-chart" height="120"></canvas>
+    </div>
+
+    <div class="chart-card">
+      <h3 class="chart-card__title">Signal Green Time (seconds)</h3>
+      <canvas id="timing-chart" height="120"></canvas>
+    </div>
+
+    <div class="chart-card">
+      <h3 class="chart-card__title">Event Log</h3>
+      <div class="event-log" id="event-log">
+        <p class="event-log__empty">Start the system to begin monitoring.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Live Camera Feeds -->
+  <section class="feeds-panel">
+    <h2 class="panel-title">Live Camera Feeds
+      <span class="feeds-hint" id="feeds-hint">(Loading...)</span>
+    </h2>
+    <div class="feeds-grid" id="feeds-grid">
+      <!-- Built by JS after a short delay so page loads fast -->
+    </div>
+  </section>
+
+</main>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

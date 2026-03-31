@@ -1,0 +1,21 @@
+# ============================================================
+#  requirements.txt — Smart Traffic Management System
+# ============================================================
+
+# Web framework
+flask==3.0.3
+flask-socketio==5.3.6
+eventlet==0.36.1          # async worker for Flask-SocketIO
+
+# AI & Computer Vision
+ultralytics==8.2.0        # YOLOv8
+opencv-python==4.9.0.80
+numpy==1.26.4
+Pillow==10.3.0
+
+# Data processing
+pandas==2.2.2
+
+# Utilities
+python-dotenv==1.0.1
+requests==2.31.0
